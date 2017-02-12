@@ -1,7 +1,7 @@
 # Socket.io Drawing Tutorial
 
 ## Installation
-* Install Node.js from https://nodejs.org
+* Install Node.js from [nodejs.org](http://nodejs.org)
 * Create and navigate into application directory
 * Create package.json
 ```json
@@ -70,4 +70,4 @@ http.listen(port, function() {
 ```shell
 $ node app
 ```
-* See your app (currently a blank page) at http://localhost:3000
+* See your app (currently a blank page) at [localhost:3000](http://localhost:3000)
