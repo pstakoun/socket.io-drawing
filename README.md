@@ -1,8 +1,11 @@
 # Socket.io Drawing Tutorial
 
 ## Installation
+
 * Install Node.js from [nodejs.org](http://nodejs.org)
+
 * Create and navigate into application directory
+
 * Create package.json
 ```json
 // Example package.json
@@ -12,16 +15,19 @@
 	"author": "Peter Stakoun"
 }
 ```
+
 * Install Express
 ```shell
 $ npm install express --save
 ```
+
 * Install Socket.IO
 ```shell
 $ npm install socket.io --save
 ```
 
 ## Client (HTML && CSS)
+
 * Create public/index.html
 ```html
 <!DOCTYPE html>
@@ -37,6 +43,7 @@ $ npm install socket.io --save
 	</body>
 </html>
 ```
+
 * Create public/style.css
 ```css
 html, body {
@@ -55,10 +62,12 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 ```
+
 * Specify client file path
 ```javascript
 app.use(express.static(__dirname + '/public'));
 ```
+
 * Create server
 ```javascript
 var port = 3000;
@@ -66,8 +75,19 @@ http.listen(port, function() {
 	console.log('Server running on port ' + port);
 });
 ```
+
 * Run the server
 ```shell
 $ node app
 ```
+
 * See your app (currently a blank page) at [localhost:3000](http://localhost:3000)
+
+* Add event handling
+```javascript
+io.on('connection', function (socket) {
+	socket.on('draw', function (data) {
+		socket.broadcast.emit('draw', data);
+	});
+});
+```

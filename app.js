@@ -9,3 +9,9 @@ var port = 3000;
 http.listen(port, function() {
 	    console.log('Server running on port ' + port);
 });
+
+io.on('connection', function (socket) {
+	socket.on('draw', function (data) {
+		socket.broadcast.emit('draw', data);
+	});
+});
