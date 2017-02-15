@@ -55,6 +55,9 @@ html, body {
 ```
 
 ## Server
+
+* Create app.js
+
 * Add imports
 ```javascript
 var express = require('express');
@@ -90,4 +93,19 @@ io.on('connection', function (socket) {
 		socket.broadcast.emit('draw', data);
 	});
 });
+```
+
+## Client (JavaScript)
+
+* Create public/script.js
+
+* Set up canvas
+```javascript
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+canvas.width = width;
+canvas.height = height;
 ```
