@@ -48,9 +48,12 @@ $ npm install socket.io --save
 ```css
 html, body {
 	margin: 0;
-	padding: 0;
 	width: 100%;
 	height: 100%;
+}
+
+#canvas {
+	display: block;
 }
 ```
 
@@ -99,13 +102,104 @@ io.on('connection', function (socket) {
 
 * Create public/script.js
 
+* Define function to draw lines on client
+```javascript
+function drawLine(context, x1, y1, x2, y2) {
+	context.moveTo(x1, y1);
+	context.lineTo(x2, y2);
+	context.stroke();
+}
+```
+
+* Excecute script when content loaded
+```javascript
+document.addEventListener("DOMContentLoaded", function() {
+```
+
 * Set up canvas
 ```javascript
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var width = window.innerWidth;
-var height = window.innerHeight;
+	var canvas = document.getElementById('canvas');
+	var context = canvas.getContext('2d');
+	var width = window.innerWidth;
+	var height = window.innerHeight;
 
-canvas.width = width;
-canvas.height = height;
+	canvas.width = width;
+	canvas.height = height;
 ```
+
+* Add mouse state variables
+```javascript
+	var drawing = false;
+	var x, y, prevX, prevY;
+```
+
+* Connect to server
+```javascript
+	var socket = io.connect();
+```
+
+* Handle mouse down event
+```javascript
+	canvas.onmousedown = function(e) {
+		drawing = true;
+		prevX = x;
+		prevY = y;
+	}
+```
+
+* Handle mouse up event
+```javascript
+	canvas.onmouseup = function(e) {
+		drawing = false;
+	}
+```
+
+* Handle mouse move event
+```javascript
+	canvas.onmousemove = function(e) {
+```
+
+* Update mouse coordinates
+```javascript
+		x = e.clientX;
+		y = e.clientY;
+```
+
+* Check if mouse down
+```javascript
+		if (drawing) {
+```
+
+* Send mouse location to server
+```javascript
+			socket.emit('draw', {
+				'x1': prevX,
+				'y1': prevY,
+				'x2': x,
+				'y2': y
+			});
+```
+
+* Draw on client
+```javascript
+			drawLine(prevX, prevY, x, y);
+			prevX = x;
+			prevY = y;
+		}
+	}
+```
+
+* Add listener for drawing from other clients
+```javascript
+socket.on('draw', function(data) {
+		drawLine(context, data.x1, data.y1, data.x2, data.y2);
+	});
+});
+```
+
+* Run the server
+```shell
+$ node app
+```
+
+* See your completed app at [localhost:3000](http://localhost:3000)

@@ -1,3 +1,9 @@
+function drawLine(context, x1, y1, x2, y2) {
+	context.moveTo(x1, y1);
+	context.lineTo(x2, y2);
+	context.stroke();
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 	var canvas = document.getElementById('canvas');
 	var context = canvas.getContext('2d');
@@ -33,19 +39,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				'y2': y
 			});
 
-			drawLine(prevX, prevY, x, y);
+			drawLine(context, prevX, prevY, x, y);
 			prevX = x;
 			prevY = y;
 		}
 	}
 
 	socket.on('draw', function(data) {
-		drawLine(data.x1, data.y1, data.x2, data.y2);
+		drawLine(context, data.x1, data.y1, data.x2, data.y2);
 	});
-
-	function drawLine(x1, y1, x2, y2) {
-		context.moveTo(x1, y1);
-		context.lineTo(x2, y2);
-		context.stroke();
-	}
 });
