@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 * Add listener for drawing from other clients
 ```javascript
-socket.on('draw', function(data) {
+	socket.on('draw', function(data) {
 		drawLine(context, data.x1, data.y1, data.x2, data.y2);
 	});
 });
