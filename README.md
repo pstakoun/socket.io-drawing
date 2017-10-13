@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 * Draw on client
 ```javascript
-			drawLine(prevX, prevY, x, y);
+			drawLine(context, prevX, prevY, x, y);
 			prevX = x;
 			prevY = y;
 		}
